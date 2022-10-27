@@ -56,7 +56,6 @@ export const XmtpContextProvider = ({ children }) => {
       const convos = await client.conversations.list();
       Promise.all(
         convos.map(async (convo) => {
-          if (convo.peerAddress !== walletAddress) {
             const messages = await convo.messages();
             convoMessages.set(convo.peerAddress, messages);
             conversations.set(convo.peerAddress, convo);
@@ -65,13 +64,11 @@ export const XmtpContextProvider = ({ children }) => {
               convoMessages,
               conversations,
             });
-          }
         })
       ).then(() => {
         setProviderState({ ...providerState, loadingConversations: false });
       });
     };
-
 
     listConversations();
     // eslint-disable-next-line
