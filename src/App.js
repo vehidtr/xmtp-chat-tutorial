@@ -6,7 +6,20 @@ import { XmtpContext } from "./contexts/XmtpContext";
 function App() {
   const { connectWallet, walletAddress, signer } = useContext(WalletContext);
   const [providerState] = useContext(XmtpContext);
-  
+  const { client } = providerState;
+
+  const sendMessage = async () => {
+    const message = "gm";
+    if (!client || !walletAddress) {
+      return;
+    }
+    const conversation = await client.conversations.newConversation(
+      walletAddress
+    );
+    if (!conversation) return;
+    await conversation.send(message);
+  };
+
   return (
     <div className="App">
       {walletAddress ? (
@@ -19,7 +32,12 @@ function App() {
               Connect to XMTP
             </button>
           ) : (
-            <p>Connected: {walletAddress}</p>
+            <>
+              <p>Connected: {walletAddress}</p>
+              <button className="btn" onClick={sendMessage}>
+                Send gm
+              </button>
+            </>
           )}
         </div>
       ) : (
