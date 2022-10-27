@@ -5,6 +5,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { WalletContextProvider } from "./contexts/WalletContext";
+import { XmtpContextProvider } from "./contexts/XmtpContext";
 
 window.Buffer = Buffer;
 
@@ -12,7 +13,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <WalletContextProvider>
-      <App />
+      <XmtpContextProvider>
+        <App />
+      </XmtpContextProvider>
     </WalletContextProvider>
   </React.StrictMode>
 );
